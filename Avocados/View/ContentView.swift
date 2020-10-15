@@ -12,6 +12,7 @@ struct ContentView: View {
     
     //MARK:- PROPERTIES
     var headers : [Header] = headersData
+    var facts: [Fact] = factsData
     
     
     var body: some View {
@@ -32,6 +33,23 @@ struct ContentView: View {
                 //MARK:- DISHES
                 DishesView()
                 
+                
+                //MARK:- AVOCADOS FACTS
+                Text("Avocados Facts")
+                    .fontWeight(.bold)
+                    .modifier(TitleModifier())
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: 60) {
+                        ForEach(facts) { item in
+                            FactsView(fact: item)
+                        }
+                    }
+                    .padding(.vertical)
+                    .padding(.leading, 60)
+                    .padding(.trailing, 20)
+
+                }
+
                 //MARK:- FOOTER
                 VStack(alignment: .center, spacing: 20) {
                     Text("All About Avocados")
@@ -50,6 +68,15 @@ struct ContentView: View {
                 .padding(.bottom,85)
             }
             }.edgesIgnoringSafeArea(.all).padding(0)
+    }
+}
+
+struct TitleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(.title, design: .serif))
+            .foregroundColor(Color("ColorGreenAdaptive"))
+            .padding(8)
     }
 }
 
