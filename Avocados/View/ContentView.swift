@@ -29,6 +29,9 @@ struct ContentView: View {
                     }
                 }
                 
+                //MARK:- DISHES
+                DishesView()
+                
                 //MARK:- FOOTER
                 VStack(alignment: .center, spacing: 20) {
                     Text("All About Avocados")
