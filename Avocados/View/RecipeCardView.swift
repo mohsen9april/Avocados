@@ -13,6 +13,8 @@ struct RecipeCardView: View {
     //MARK:- PROPERTIES
     
     var recipe : Recipe
+    var hapticImpact = UIImpactFeedbackGenerator(style: .light)
+    @State private var showModel : Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -49,34 +51,13 @@ struct RecipeCardView: View {
                     .font(.system(.body, design: .serif))
                     .foregroundColor(Color.gray)
                     .italic()
+                
                 //RATES
-                HStack(alignment: .center, spacing: 5){
-                    ForEach(1...(recipe.rating), id: \.self) { _ in
-                        Image(systemName: "star.fill")
-                            .font(.body)
-                            .foregroundColor(Color.yellow)
-                    }
-                }
+                RecipeRatingView(recipe: recipe)
                 
                 //COOKING
-                HStack(alignment: .center, spacing: 12){
-                    HStack(alignment: .center, spacing: 2) {
-                        Image(systemName: "person")
-                        Text("Serves: \(recipe.serves)")
-                    }
-                    
-                    HStack(alignment: .center, spacing: 2) {
-                        Image(systemName: "clock")
-                        Text("Serves: \(recipe.preparation)")
-                    }
-                    
-                    HStack(alignment: .center, spacing: 2) {
-                        Image(systemName: "flame")
-                        Text("Serves: \(recipe.cooking)")
-                    }
-                }
-                .font(.footnote)
-                .foregroundColor(Color.gray)
+                RecipeCookingView(recipe: recipe)
+                
             }
             .padding()
             .padding(.bottom,12)
@@ -85,6 +66,12 @@ struct RecipeCardView: View {
         .cornerRadius(12)
         .shadow(color: Color("ColorBlackTransparentDark"), radius: 8, x: 0, y: 0)
         
+        .onTapGesture {
+            self.hapticImpact.impactOccurred()
+            self.showModel = true
+        }.sheet(isPresented: self.$showModel) {
+            RecipeDetailView(recipe: self.recipe)
+        }  
     }
 }
 
