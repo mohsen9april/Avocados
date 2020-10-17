@@ -13,6 +13,7 @@ struct ContentView: View {
     //MARK:- PROPERTIES
     var headers : [Header] = headersData
     var facts: [Fact] = factsData
+    var recipes: [Recipe] = recipesData
     
     
     var body: some View {
@@ -49,6 +50,14 @@ struct ContentView: View {
                     .padding(.trailing, 20)
 
                 }
+                //MARK:- RECIPEVIEW
+                VStack(alignment: .center, spacing: 20){
+                    ForEach(recipes) { item in
+                        RecipeCardView(recipe: item)
+                    }
+                }
+                .frame(maxWidth: 649)
+                .padding(.horizontal)
 
                 //MARK:- FOOTER
                 VStack(alignment: .center, spacing: 20) {
@@ -82,6 +91,6 @@ struct TitleModifier: ViewModifier {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(headers: headersData)
+        ContentView(headers: headersData , recipes: recipesData)
     }
 }
